@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tokokita/bloc/product_bloc.dart';
 import 'package:tokokita/model/produk.dart';
 import 'package:tokokita/ui/produk_form.dart';
+import 'package:tokokita/ui/produk_page.dart';
 
 class ProdukDetail extends StatefulWidget {
   Produk produk;
@@ -42,9 +44,10 @@ class _ProdukDetailState extends State<ProdukDetail> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        RaisedButton(
+        ElevatedButton(
             child: Text("EDIT"),
-            color: Colors.green,
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.green)),
             onPressed: () {
               Navigator.push(
                   context,
@@ -53,9 +56,10 @@ class _ProdukDetailState extends State<ProdukDetail> {
                             produk: widget.produk,
                           )));
             }),
-        RaisedButton(
+        ElevatedButton(
             child: Text("DELETE"),
-            color: Colors.red,
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.red)),
             onPressed: () => confirmHapus()),
       ],
     );
@@ -65,14 +69,21 @@ class _ProdukDetailState extends State<ProdukDetail> {
     AlertDialog alertDialog = new AlertDialog(
       content: Text("Yakin ingin menghapus data ini?"),
       actions: [
-        RaisedButton(
+        ElevatedButton(
           child: Text("Ya"),
-          color: Colors.green,
-          onPressed: () {},
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.green)),
+          onPressed: () {
+            ProdukBloc.deleteProduk(id: widget.produk.id).then((value) {
+              Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (BuildContext context) => ProdukPage()));
+            });
+          },
         ),
-        RaisedButton(
+        ElevatedButton(
             child: Text("Batal"),
-            color: Colors.red,
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.red)),
             onPressed: () => Navigator.pop(context)),
       ],
     );
