@@ -3,6 +3,7 @@ import 'package:tokokita/bloc/product_bloc.dart';
 import 'package:tokokita/model/produk.dart';
 import 'package:tokokita/ui/produk_form.dart';
 import 'package:tokokita/ui/produk_page.dart';
+import 'package:tokokita/widget/warning_dialog.dart';
 
 class ProdukDetail extends StatefulWidget {
   Produk produk;
@@ -77,6 +78,12 @@ class _ProdukDetailState extends State<ProdukDetail> {
             ProdukBloc.deleteProduk(id: widget.produk.id).then((value) {
               Navigator.of(context).push(new MaterialPageRoute(
                   builder: (BuildContext context) => ProdukPage()));
+            }, onError: (error) {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => WarningDialog(
+                        description: "Hapus data gagal, silakan coba lagi",
+                      ));
             });
           },
         ),

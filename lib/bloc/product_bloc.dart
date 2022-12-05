@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:tokokita/helpers/api.dart';
 import 'package:tokokita/helpers/api_url.dart';
 import 'package:tokokita/model/produk.dart';
@@ -46,7 +47,7 @@ class ProdukBloc {
     return jsonObj['data'];
   }
 
-  static Future<bool> deleteProduk({Produk produk}) async {
+  static Future<bool> deleteProduk({Produk produk, int id}) async {
     String apiUrl = ApiUrl.deleteProduk(produk.id);
 
     var response = await Api().delete(apiUrl);
